@@ -4,6 +4,9 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     FRONT_API_KEY: z.string().min(1).optional(),
+    ZENDESK_API_KEY: z.string().min(1).optional(),
+    ZENDESK_EMAIL: z.string().min(1).optional(),
+    ZENDESK_SUBDOMAIN: z.string().min(1).optional(),
   },
 
   /**
