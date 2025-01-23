@@ -1,0 +1,38 @@
+{
+  "name": "ollama-generate-helpdesk-data",
+  "version": "0.1.0",
+  "type": "module",
+  "author": "Jason Dugdale <jason@jasondugdale.com>",
+  "description": "Generate sample helpdesk data using Ollama models",
+  "main": "index.ts",
+  "scripts": {
+    "start": "tsx watch --env-file .env index.ts ",
+    "dev": "tsx watch index.ts",
+    "lint": "biome check --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "front",
+    "front.com",
+    "ai",
+    "ollama",
+    "helpdesk",
+    "email",
+    "customer support"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@faker-js/faker": "^9.4.0",
+    "@t3-oss/env-core": "0.11.1",
+    "ai": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "ollama-ai-provider": "^1.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.10.10",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}
