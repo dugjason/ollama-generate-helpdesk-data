@@ -26,7 +26,7 @@ function getHelpdesk() {
     return new FrontHelpdesk({ inboxId: "inb_9vyz6" });
   }
   if (process.env.ZENDESK_API_KEY) {
-    return new ZendeskHelpdesk({ subdomain: "d3v-nocoast" });
+    return new ZendeskHelpdesk();
   } else {
     throw new Error("No helpdesk API key set");
   }

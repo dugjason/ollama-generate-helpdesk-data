@@ -102,7 +102,7 @@ export class ZendeskHelpdesk extends Helpdesk {
 
       return response;
     } catch (error) {
-      // TODO: handle rate limiting
+      // TODO: sync with team to figure out plan for handling rate limiting
       console.error("Error importing message to Zendesk", error);
       throw error;
     }
