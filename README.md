@@ -50,9 +50,6 @@ The following environment variables are required:
 ## Usage
 
 ```bash
-# Run once
-npm start
-
 # Run in development mode (with watch)
 npm run dev
 ```
@@ -64,7 +61,7 @@ npm run dev
 ├── lib/
 │   ├── helpdesks/       # Helpdesk provider integrations
 │   │   ├── index.ts     # Base Helpdesk class
-│   │   └── front.ts     # Front.com implementation
+│   │   └── front.ts     # Front.com helpdesk implementation
 │   ├── env.ts           # Environment variable validation
 │   ├── person.ts        # User persona generation
 │   └── prompts.ts       # LLM prompt definitions
@@ -88,6 +85,10 @@ The project uses:
 - Zod for runtime type validation
 - @t3-oss/env-core for environment variable management
 - tsx for running TypeScript directly
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a PR to make this project better, or to add support for other helpdesk systems.
 
 ## License
 
