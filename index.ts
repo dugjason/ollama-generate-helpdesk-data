@@ -37,7 +37,7 @@ const personContext = new AsyncLocalStorage<{ person: Person }>()
 async function run() {
   // Initialize your helpdesk client
   const helpdesk = getHelpdesk()
-  
+
   for (let i = 0; i < numberOfEmails; i++) {
     const person = generatePerson()
 
@@ -53,16 +53,12 @@ async function run() {
       const completion = await generateMessage({ prompt, person })
 
       // Send the email to the helpdesk, the "to" field should be the email address of the helpdesk, for zendesk its the email address of the assignee
-      await helpdesk.sendMessage(
-        person,
-        { to: ["eric@example.com"] },
-        completion
-      );
+      await helpdesk.sendMessage(person, { to: ["eric@example.com"] }, completion)
 
       // Wait for 1 second before the next email
       await new Promise((resolve) => setTimeout(resolve, 1_000))
       console.log("--")
-    });
+    })
   }
 }
 

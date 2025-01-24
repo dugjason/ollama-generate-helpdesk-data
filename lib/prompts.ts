@@ -4,7 +4,6 @@ import { z } from "zod"
 
 import type { Person } from "./person"
 
-
 export const emailSchema = z.object({
   text: z.string().min(100).max(2_000).describe("The email body"),
   subject: z.string().min(10).max(250).describe("The email subject"),
@@ -20,11 +19,7 @@ interface GenerateMessageOptions {
 }
 
 // Generate message using Ollama
-export async function generateMessage({
-  prompt,
-  person,
-  system,
-}: GenerateMessageOptions) {
+export async function generateMessage({ prompt, person, system }: GenerateMessageOptions) {
   const { object } = await generateObject({
     // Adjust the model to your preference - see available Ollama-supported models at;
     // https://ollama.com/search
