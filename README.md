@@ -43,9 +43,11 @@ cp .env.example .env
 
 ## Configuration
 
-The following environment variables are required:
+The environment variable that relates to your corresponding Support platform is required.
 
 - `FRONT_API_KEY`: Your Front.com API key
+- `ZENDESK_API_KEY`: Your Zendesk API key
+- `ZENDESK_EMAIL`: The email you'd like to create the Zendesk tickets from, minimum role level of agent
 
 ## Usage
 
@@ -62,6 +64,7 @@ npm run dev
 │   ├── helpdesks/       # Helpdesk provider integrations
 │   │   ├── index.ts     # Base Helpdesk class
 │   │   └── front.ts     # Front.com helpdesk implementation
+|   |   |__ zendesk.ts   # Zendesk.com implementation
 │   ├── env.ts           # Environment variable validation
 │   ├── person.ts        # User persona generation
 │   └── prompts.ts       # LLM prompt definitions

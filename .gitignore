@@ -53,3 +53,6 @@ coverage/
 
 # Biome cache
 .biome/
+
+# Package lock
+package-lock.json

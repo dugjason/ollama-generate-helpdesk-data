@@ -21,7 +21,9 @@ interface GenerateMessageOptions {
 // Generate message using Ollama
 export async function generateMessage({ prompt, person, system }: GenerateMessageOptions) {
   const { object } = await generateObject({
-    model: ollama("mistral"),
+    // Adjust the model to your preference - see available Ollama-supported models at;
+    // https://ollama.com/search
+    model: ollama("llama3.2:3b"),
     temperature: 1,
     system:
       system ??
