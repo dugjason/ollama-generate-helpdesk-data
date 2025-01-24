@@ -36,17 +36,13 @@ export class ZendeskHelpdesk extends Helpdesk {
   private subdomain: string
 
   constructor() {
-    const requiredEnvVars = ["ZENDESK_API_KEY", "ZENDESK_EMAIL", "ZENDESK_SUBDOMAIN"]
-    requiredEnvVars.forEach((varName) => {
-      if (!env[varName as keyof typeof env]) {
-        throw new Error(`${varName} is not set - please set the ${varName} environment variable`)
-      }
-    })
-
     super()
-    this.apiKey = env.ZENDESK_API_KEY!
-    this.email = env.ZENDESK_EMAIL!
-    this.subdomain = env.ZENDESK_SUBDOMAIN!
+    if (!env.ZENDESK_API_KEY || !env.ZENDESK_EMAIL || !env.ZENDESK_SUBDOMAIN) {
+      throw new Error("Required Zendesk environment variables are not set")
+    }
+    this.apiKey = env.ZENDESK_API_KEY
+    this.email = env.ZENDESK_EMAIL
+    this.subdomain = env.ZENDESK_SUBDOMAIN
   }
 
   async sendMessage(

@@ -28,9 +28,8 @@ function getHelpdesk() {
   }
   if (env.ZENDESK_API_KEY) {
     return new ZendeskHelpdesk()
-  } else {
-    throw new Error("No helpdesk API key set")
   }
+  throw new Error("No helpdesk API key set")
 }
 const personContext = new AsyncLocalStorage<{ person: Person }>()
 
