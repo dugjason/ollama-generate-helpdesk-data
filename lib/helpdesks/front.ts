@@ -1,56 +1,56 @@
-import crypto from 'node:crypto';
-import { z } from 'zod';
+import crypto from "node:crypto"
+import type { z } from "zod"
 
-import { env } from '../env';
-import { Person } from '../person';
-import { emailSchema } from '../prompts';
-import { Helpdesk, type Recipient } from './index';
+import { env } from "../env"
+import type { Person } from "../person"
+import type { emailSchema } from "../prompts"
+import { Helpdesk, type Recipient } from "./index"
 
 interface FrontConfig {
   // The Front Inbox ID the message will be sent to (inb_...)
-  inboxId: `inb_${string}`;
-};
+  inboxId: `inb_${string}`
+}
 
 /**
  * The message to import into Front.com
  */
 interface FrontImportMessage {
   // The sender of the message.
-  sender: { handle: string, name?: string, author_id?: string };
+  sender: { handle: string; name?: string; author_id?: string }
   // The recipients of the message.
-  to: Array<string>;
+  to: Array<string>
   // The email addresses the message is CC'd to.
-  cc?: Array<string>;
+  cc?: Array<string>
   // The email addresses the message is BCC'd to.
-  bcc?: Array<string>;
+  bcc?: Array<string>
   // The subject of the message.
-  subject: string;
+  subject: string
   // The body of the message.
-  body: string;
+  body: string
   // The format of the body.
-  body_format?: 'markdown' | 'html';
+  body_format?: "markdown" | "html"
   // The external ID of the message. (One will be generated if not provided)
-  external_id?: string;
+  external_id?: string
   // The creation date of the message. (One will be generated if not provided as the current timestamp)
-  created_at?: number;
+  created_at?: number
   // The type of the message.
-  type?: 'email' | 'sms' | 'intercom' | 'custom';
+  type?: "email" | "sms" | "intercom" | "custom"
   // Assignee ID
-  assignee_id?: string;
+  assignee_id?: string
   // List of Tag Names to add to the conversation
-  tags?: Array<string>;
+  tags?: Array<string>
   // If supplied, Front will thread this message into conversation with the given ID. Note that including this parameter nullifies the thread_ref parameter completely.
-  conversation_id?: string;
+  conversation_id?: string
   // Metadata
   metadata?: {
     // Reference which will be used to thread messages. If omitted, Front threads by sender instead
-    thread_ref?: string;
+    thread_ref?: string
     // Determines if message is archived after import.
-    is_archived: boolean;
+    is_archived: boolean
     // Determines if message is received (inbound) or sent (outbound) by you.
-    is_inbound: boolean;
+    is_inbound: boolean
     // Determines if rules should be skipped. `true` by default.
-    should_skip_rules: boolean;
+    should_skip_rules: boolean
     // TODO: Support attachments
     // attachments?: Array<File>;
   }
@@ -60,20 +60,26 @@ interface FrontImportMessage {
  * Helpdesk integration for Front.com
  */
 export class FrontHelpdesk extends Helpdesk {
-  private inboxId: `inb_${string}`;
-  private apiKey: string;
+  private inboxId: `inb_${string}`
+  private apiKey: string
 
   constructor(config: FrontConfig) {
     if (!env.FRONT_API_KEY) {
-      throw new Error('FRONT_API_KEY is not set - please set the FRONT_API_KEY environment variable');
+      throw new Error(
+        "FRONT_API_KEY is not set - please set the FRONT_API_KEY environment variable",
+      )
     }
 
-    super();
-    this.apiKey = env.FRONT_API_KEY;
-    this.inboxId = config.inboxId;
+    super()
+    this.apiKey = env.FRONT_API_KEY
+    this.inboxId = config.inboxId
   }
 
-  async sendMessage(sender: Person, recipient: Recipient, message: z.infer<typeof emailSchema>): Promise<void> {
+  async sendMessage(
+    sender: Person,
+    recipient: Recipient,
+    message: z.infer<typeof emailSchema>,
+  ): Promise<void> {
     const body: FrontImportMessage = {
       sender: { handle: sender.email },
       to: recipient.to,
@@ -88,7 +94,7 @@ export class FrontHelpdesk extends Helpdesk {
       },
     }
 
-    await this.importFrontMessage(JSON.stringify(body));
+    await this.importFrontMessage(JSON.stringify(body))
   }
 
   /**
@@ -98,27 +104,30 @@ export class FrontHelpdesk extends Helpdesk {
    * @see https://dev.frontapp.com/reference/import-inbox-message
    */
   private async importFrontMessage(body: string): Promise<Response> {
-    let response: Response;
+    let response: Response
 
     try {
-      response = await fetch(`https://api2.frontapp.com/inboxes/${this.inboxId}/imported_messages`, {
-        method: 'POST',
-        body,
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json',
+      response = await fetch(
+        `https://api2.frontapp.com/inboxes/${this.inboxId}/imported_messages`,
+        {
+          method: "POST",
+          body,
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+            "Content-Type": "application/json",
+          },
         },
-      });
+      )
 
       if (!response.ok) {
-        throw new Error(`Failed to import message to Front: ${response.statusText}`);
+        throw new Error(`Failed to import message to Front: ${response.statusText}`)
       }
 
-      return response;
+      return response
     } catch (error) {
       // TODO: handle rate limiting
-      console.error("Error importing message to Front", error);
-      throw error;
+      console.error("Error importing message to Front", error)
+      throw error
     }
   }
 }
