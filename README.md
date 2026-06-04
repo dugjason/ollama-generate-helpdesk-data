@@ -43,11 +43,13 @@ cp .env.example .env
 
 ## Configuration
 
-The environment variable that relates to your corresponding Support platform is required.
+1. The environment variable that relates to your corresponding Support platform is required.
 
 - `FRONT_API_KEY`: Your Front.com API key
 - `ZENDESK_API_KEY`: Your Zendesk API key
 - `ZENDESK_EMAIL`: The email you'd like to create the Zendesk tickets from, minimum role level of agent
+
+2. In [index.ts](https://github.com/dugjason/ollama-generate-helpdesk-data/blob/36e2438010a51234aba8442d75e46556a98a23e0/index.ts#L27), specify the inbox ID where you want the conversations to populate.
 
 ## Usage
 
